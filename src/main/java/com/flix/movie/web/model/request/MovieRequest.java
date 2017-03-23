@@ -8,7 +8,7 @@ import java.math.BigInteger;
 public class MovieRequest {
 
     private String title;
-    private BigInteger rating;
+    private String rating;
     private String description;
 
     public String getTitle() {
@@ -19,11 +19,11 @@ public class MovieRequest {
         this.title = title;
     }
 
-    public BigInteger getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(BigInteger rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 

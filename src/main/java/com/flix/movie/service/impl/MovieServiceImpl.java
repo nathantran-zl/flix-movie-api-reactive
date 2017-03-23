@@ -30,13 +30,45 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Mono<Void> update(String id, MovieRequest movieRequest) {
-        return null;
+    public Mono<Movie> update(String id, MovieRequest movieRequest) {
+
+       return movieRepository.findOne(id).map(existingMovie -> {
+
+           if(movieRequest.getDescription() != null){
+               existingMovie.setDescription(movieRequest.getDescription());
+           }
+           if(movieRequest.getRating() != null){
+               existingMovie.setRating(movieRequest.getRating());
+           }
+           if(movieRequest.getTitle() != null) {
+               existingMovie.setTitle(movieRequest.getTitle());
+           }
+
+           return existingMovie;
+
+       }).then(movieRepository::save);
     }
 
     @Override
-    public Mono<Void> create(Mono<MovieRequest> movieRequest) {
-        return null;
+    public Mono<Movie> create(Mono<MovieRequest> movieRequest) {
+
+        return movieRequest.map(newMovie -> {
+
+            Movie movie = new Movie();
+
+            if(newMovie.getDescription() != null){
+                movie.setDescription(newMovie.getDescription());
+            }
+            if(newMovie.getRating() != null){
+                movie.setRating(newMovie.getRating());
+            }
+            if(newMovie.getTitle() != null) {
+                movie.setTitle(newMovie.getTitle());
+            }
+
+            return movie;
+
+        }).then(movieRepository::save);
     }
 
     @Override

@@ -13,9 +13,9 @@ public interface MovieService {
 
     Flux<Movie> findByRating(String rating);
 
-    Mono<Void> update(String id, MovieRequest movieRequest);
+    Mono<Movie> update(String id, MovieRequest movieRequest);
 
-    Mono<Void> create(Mono<MovieRequest> movieRequest);
+    Mono<Movie> create(Mono<MovieRequest> movieRequest);
 
     Mono<Movie> read(String id);
 
