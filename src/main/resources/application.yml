@@ -1,0 +1,12 @@
+---
+
+spring:
+    data:
+        mongodb:
+          uri: mongodb://admin:admin1234!@movie-shard-00-00-xfzg4.mongodb.net:27017,movie-shard-00-01-xfzg4.mongodb.net:27017,movie-shard-00-02-xfzg4.mongodb.net:27017/movie?ssl=false&replicaSet=Movie-shard-0&authSource=admin
+
+management:
+  context-path: /admin
+
+server:
+  port: 8080
