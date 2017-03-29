@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
 
 /**
  * Created by sromero on 2/20/17.
@@ -41,7 +40,8 @@ public class MovieRestController {
             @PathVariable("movieId") final String movieId) {
 
         return movieService.read(movieId)
-                .map(m -> new ResponseEntity<>(m, HttpStatus.OK));
+                .map(m -> new ResponseEntity<>(m, HttpStatus.OK))
+                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping("/movies/{movieId}")
@@ -49,7 +49,8 @@ public class MovieRestController {
             @PathVariable("movieId") final String movieId) {
 
         return movieService.delete(movieId)
-                .map(m -> new ResponseEntity<>(m, HttpStatus.OK));
+                .map(m -> new ResponseEntity<>(m, HttpStatus.OK))
+                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/movies/{movieId}")
@@ -58,7 +59,8 @@ public class MovieRestController {
             @RequestBody final MovieRequest movieRequest) {
 
         return movieService.update(movieId, movieRequest)
-                .map(m -> new ResponseEntity<>(m, HttpStatus.OK));
+                .map(m -> new ResponseEntity<>(m, HttpStatus.OK))
+                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
     }
 
@@ -67,7 +69,8 @@ public class MovieRestController {
             @RequestBody final Mono<MovieRequest> movieRequest) {
 
         return movieService.create(movieRequest)
-                .map(m -> new ResponseEntity<>(m, HttpStatus.OK));
+                .map(m -> new ResponseEntity<>(m, HttpStatus.OK))
+                .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
     }
 

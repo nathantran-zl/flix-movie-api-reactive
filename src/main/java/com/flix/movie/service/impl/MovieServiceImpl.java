@@ -79,7 +79,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Mono<Movie> delete(String id) {
         Mono<Movie> movie = movieRepository.findOne(id);
-        movieRepository.delete(id);
+        movie.then(m -> movieRepository.delete(id));
         return movie;
     }
 }
