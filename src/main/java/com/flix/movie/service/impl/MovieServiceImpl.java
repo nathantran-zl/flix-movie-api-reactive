@@ -23,7 +23,6 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.findAll();
     }
 
-
     @Override
     public Flux<Movie> findByRating(final String rating){
         return movieRepository.findByRating(rating);
@@ -78,8 +77,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Mono<Movie> delete(String id) {
-        Mono<Movie> movie = movieRepository.findOne(id);
-        movie.then(m -> movieRepository.delete(id));
-        return movie;
+        return movieRepository.findOne(id)
+                .flatMap(oldValue -> movieRepository.delete(id).then(Mono.just(oldValue)))
+                .singleOrEmpty();
     }
 }
