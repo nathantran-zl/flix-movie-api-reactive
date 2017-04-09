@@ -17,6 +17,16 @@ public class Movie {
     private String rating;
     private String description;
 
+    public Movie(String title, String rating, String description) {
+        this.title = title;
+        this.rating = rating;
+        this.description = description;
+    }
+
+    public Movie() {
+    }
+
+
     public String getId() {
         return id;
     }
