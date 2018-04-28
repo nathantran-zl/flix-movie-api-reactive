@@ -1,10 +1,12 @@
-package com.flix.movie.web.controller;
+package com.flix.movie.controller;
 
-import com.flix.movie.entity.Movie;
+import com.flix.movie.model.Movie;
 import com.flix.movie.service.MovieService;
-import com.flix.movie.web.model.request.MovieRequest;
+import com.flix.movie.dto.request.MovieRequest;
+import java.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -21,9 +23,9 @@ public class MovieRestController {
     private MovieService movieService;
 
     @GetMapping(value = "/movies")
-    public Flux<ResponseEntity<Movie>> list() {
+    public Flux<Movie> list() {
 
-        return movieService.list().map(m -> new ResponseEntity<>(m, HttpStatus.OK));
+        return movieService.list();
     }
 
     @GetMapping(value = "/moviesByRating")
@@ -72,6 +74,14 @@ public class MovieRestController {
                 .map(m -> new ResponseEntity<>(m, HttpStatus.OK))
                 .defaultIfEmpty(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
+    }
+
+    @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<Movie> getProductEvents() {
+        return Flux.interval(Duration.ofSeconds(1))
+            .map(val ->
+                new Movie("movie1", "1", "movie1")
+            );
     }
 
 }

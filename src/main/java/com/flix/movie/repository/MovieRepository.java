@@ -1,6 +1,6 @@
 package com.flix.movie.repository;
 
-import com.flix.movie.entity.Movie;
+import com.flix.movie.model.Movie;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;

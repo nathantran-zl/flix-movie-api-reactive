@@ -1,6 +1,6 @@
-package com.flix.movie.web.model.response;
+package com.flix.movie.dto.response;
 
-import com.flix.movie.entity.Movie;
+import com.flix.movie.model.Movie;
 
 import java.util.List;
 

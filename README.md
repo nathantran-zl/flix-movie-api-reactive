@@ -8,8 +8,9 @@ Developer Setup
         Add the path to your new Maven/bin directory to your PATH system variable
     Clone git repo
     Navigate to root of your new repository
-    Run command mvn spring-boot:run
-    Run command mvn -Dspring.profiles.active=dev spring-boot:run
+    mvn -Dspring.profiles.active=dev spring-boot:run
+    mvn -Drun.jvmArguments="-Dspring.profiles.active=dev --add-modules java.xml.bind" spring-boot:run
+    mvn -Drun.jvmArguments="--add-modules java.xml.bind" spring-boot:run
     Access REST endpoints at localhost:8080
 
 

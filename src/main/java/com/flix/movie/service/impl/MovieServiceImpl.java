@@ -1,9 +1,9 @@
 package com.flix.movie.service.impl;
 
-import com.flix.movie.entity.Movie;
+import com.flix.movie.model.Movie;
 import com.flix.movie.repository.MovieRepository;
 import com.flix.movie.service.MovieService;
-import com.flix.movie.web.model.request.MovieRequest;
+import com.flix.movie.dto.request.MovieRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
@@ -31,7 +31,7 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Mono<Movie> update(String id, MovieRequest movieRequest) {
 
-       return movieRepository.findOne(id).map(existingMovie -> {
+       return movieRepository.findById(id).flatMap(existingMovie -> {
 
            if(movieRequest.getDescription() != null){
                existingMovie.setDescription(movieRequest.getDescription());
@@ -43,15 +43,15 @@ public class MovieServiceImpl implements MovieService {
                existingMovie.setTitle(movieRequest.getTitle());
            }
 
-           return existingMovie;
+           return movieRepository.save(existingMovie);
 
-       }).then(movieRepository::save);
+       });
     }
 
     @Override
     public Mono<Movie> create(Mono<MovieRequest> movieRequest) {
 
-        return movieRequest.map(newMovie -> {
+        return movieRequest.flatMap(newMovie -> {
 
             Movie movie = new Movie();
 
@@ -65,20 +65,19 @@ public class MovieServiceImpl implements MovieService {
                 movie.setTitle(newMovie.getTitle());
             }
 
-            return movie;
+            return movieRepository.save(movie);
 
-        }).then(movieRepository::save);
+        });
     }
 
     @Override
     public Mono<Movie> read(String id) {
-        return movieRepository.findOne(id);
+        return movieRepository.findById(id);
     }
 
     @Override
     public Mono<Movie> delete(String id) {
-        return movieRepository.findOne(id)
-                .flatMap(oldValue -> movieRepository.delete(id).then(Mono.just(oldValue)))
-                .singleOrEmpty();
+        return movieRepository.findById(id)
+                .flatMap(oldValue -> movieRepository.deleteById(id).then(Mono.just(oldValue)));
     }
 }

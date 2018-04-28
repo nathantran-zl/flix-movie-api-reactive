@@ -1,7 +1,7 @@
 package com.flix.movie.service;
 
-import com.flix.movie.entity.Movie;
-import com.flix.movie.web.model.request.MovieRequest;
+import com.flix.movie.model.Movie;
+import com.flix.movie.dto.request.MovieRequest;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
